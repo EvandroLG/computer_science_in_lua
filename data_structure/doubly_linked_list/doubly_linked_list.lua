@@ -21,7 +21,7 @@ function DoublyLinkedList:add(data)
     self._head = node
     self._tail = node
   else
-    self._tail.next = node
+    self._tail.node_next = node
     node.node_prev = self._tail
     self._tail = node
   end

@@ -1,23 +1,9 @@
-local LinkedList = require 'linked_list'
+package.path = './data_structure/?/?.lua;' .. package.path
 
-local format = string.format
-
-function test(name, func)
-  xpcall(function()
-    func()
-    print(format('[pass] %s', name))
-  end, function(err)
-    print(format('[fail] %s : %s', name, err))  
-  end)
-end
-
-function _equal(a, b)
-  return a == b
-end
-
-function assert_equal(a, b)
-  assert(_equal(a, b))
-end
+local LinkedList = require 'singly_linked_list'
+local unittest = require 'unittest'
+local test = unittest.test
+local assert_equal = unittest.assert_equal
 
 test('add the data in the end of the list', function()
   local list = LinkedList:new()
