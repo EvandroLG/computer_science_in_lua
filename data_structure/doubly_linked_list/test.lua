@@ -29,7 +29,7 @@ test('remove the item given a position in the list', function()
   list:remove(1)
 
   assert_equal(list:item(0), 'C')
-  assert_equal(list:item(1), 'Java')
+  assert_equal(list:item(1), 'C++')
   assert_equal(list:size(), 2)
 end)
 

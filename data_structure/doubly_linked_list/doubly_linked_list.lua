@@ -19,13 +19,12 @@ function DoublyLinkedList:add(data)
 
   if self._head == nil then
     self._head = node
-    self._tail = node
   else
     self._tail.node_next = node
-    node.node_prev = self._tail
-    self._tail = node
+    self._tail.node_prev = self._tail
   end
 
+  self._tail = node
   self._size = self._size + 1
 end
 
@@ -36,7 +35,7 @@ function DoublyLinkedList:item(index)
 
     while i < index do
       current = current.node_next
-      i = i + i
+      i = i + 1
     end
 
     return current.data
@@ -58,10 +57,12 @@ function DoublyLinkedList:remove(index)
       else
         self._head.node_prev = nil
       end
+
     elseif index == self._size - 1 then
       current = self._tail
-      current.node_next = nil
       current._tail = current.node_prev
+      current.node_next = nil
+
     else
       while i < index do
         current = current.node_next
@@ -72,12 +73,16 @@ function DoublyLinkedList:remove(index)
       current.node_next.node_prev = current.node_prev
     end
 
-    self.size = self.size - 1
+    self._size = self._size - 1
 
     return current.data
   else
     return nil
   end
+end
+
+function DoublyLinkedList:size()
+  return self._size
 end
 
 return DoublyLinkedList
