@@ -79,3 +79,5 @@ function DoublyLinkedList:remove(index)
     return nil
   end
 end
+
+return DoublyLinkedList

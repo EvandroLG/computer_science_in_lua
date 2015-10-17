@@ -5,6 +5,7 @@ function LinkedList:new()
   self.__index = self
   self._size = 0
   self._head = nil
+  self._tail = nil
 
   return setmetatable(obj, self)
 end
@@ -19,15 +20,10 @@ function LinkedList:add(data)
   if self._head == nil then
     self._head = node
   else
-    local current = self._head
-
-    while current.node_next do
-      current = current.node_next
-    end
-
-    current.node_next = node
+    self._tail.node_next = node
   end
 
+  self._tail = node
   self._size = self._size + 1
 end
 
@@ -57,6 +53,21 @@ function LinkedList:remove(index)
     
     if index == 0 then
       self._head = current.node_next
+
+      if self._head == nil then
+        self.tail = nil
+      end
+
+    elseif index == self._size - 1 then
+      previous = self._head
+      
+      while previous.node_next ~= self._tail do
+        previous = previous.node_next
+      end
+
+      self._tail = previous
+      self._tail.node_next = nil
+
     else
       while i < index do
         previous = current
