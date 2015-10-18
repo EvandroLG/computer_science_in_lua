@@ -1,31 +1,43 @@
 package.path = './data_structure/?/?.lua;' .. package.path
 
-local LinkedList = require 'doubly_linked_list'
+local DoublyLinkedList = require 'doubly_linked_list'
 local unittest = require 'unittest'
 local test = unittest.test
 local assert_equal = unittest.assert_equal
 
 test('add the data in the end of the list', function()
-  local list = LinkedList:new()
-  list:add('JavaScript')
-  list:add('Lua')
+  local list = DoublyLinkedList:new()
+  list:add_last('JavaScript')
+  list:add_last('Lua')
 
   assert_equal(list:item(0), 'JavaScript')
   assert_equal(list:item(1), 'Lua')
   assert_equal(list:size(), 2)
 end)
 
+test('add the data in the begin of the list', function()
+  local list = DoublyLinkedList:new()
+  list:add_first('JavaScript')
+  list:add_first('Lua')
+  list:add_first('Python')
+
+  assert_equal(list:item(0), 'Python')
+  assert_equal(list:item(1), 'Lua')
+  assert_equal(list:item(2), 'JavaScript')
+  assert_equal(list:size(), 3)
+end)
+
 test('retrieve the first data in the list', function()
-  local list = LinkedList:new()
-  list:add('Python')
+  local list = DoublyLinkedList:new()
+  list:add_last('Python')
   assert_equal(list:item(0), 'Python')
 end)
 
 test('remove the item given a position in the list', function()
-  local list = LinkedList:new()
-  list:add('C')
-  list:add('C++')
-  list:add('Java')
+  local list = DoublyLinkedList:new()
+  list:add_last('C')
+  list:add_last('C++')
+  list:add_last('Java')
   list:remove(1)
 
   assert_equal(list:item(0), 'C')
@@ -34,10 +46,10 @@ test('remove the item given a position in the list', function()
 end)
 
 test('remove the last item', function()
-  local list = LinkedList:new()
-  list:add('Python')
-  list:add('Lua')
-  list:add('Ruby')
+  local list = DoublyLinkedList:new()
+  list:add_last('Python')
+  list:add_last('Lua')
+  list:add_last('Ruby')
   list:remove(2)
 
   assert_equal(list:item(0), 'Python')
@@ -46,10 +58,10 @@ test('remove the last item', function()
 end)
 
 test('remove the last item', function()
-  local list = LinkedList:new()
-  list:add('Python')
-  list:add('Lua')
-  list:add('Ruby')
+  local list = DoublyLinkedList:new()
+  list:add_last('Python')
+  list:add_last('Lua')
+  list:add_last('Ruby')
   list:remove_last()
 
   assert_equal(list:item(0), 'Python')
@@ -58,10 +70,10 @@ test('remove the last item', function()
 end)
 
 test('remove the first item', function()
-  local list = LinkedList:new()
-  list:add('Go')
-  list:add('Rust')
-  list:add('Ruby')
+  local list = DoublyLinkedList:new()
+  list:add_last('Go')
+  list:add_last('Rust')
+  list:add_last('Ruby')
   list:remove_first()
 
   assert_equal(list:item(0), 'Rust')

@@ -10,12 +10,16 @@ function DoublyLinkedList:new()
   return setmetatable(obj, self)
 end
 
-function DoublyLinkedList:add(data)
-  local node = {
+function DoublyLinkedList:_create_node(data)
+  return {
     data = data,
     node_next = nil,
     node_prev = nil
   }
+end
+
+function DoublyLinkedList:add_last(data)
+  local node = self:_create_node(data)
 
   if self._head == nil then
     self._head = node
@@ -28,6 +32,21 @@ function DoublyLinkedList:add(data)
   self._size = self._size + 1
 end
 
+function DoublyLinkedList:add_first(data)
+  local node = self:_create_node(data)
+
+  if self._head == nil then
+    self._tail = node
+  else
+    node.node_next = self._head
+    self._head.node_prev = node
+  end
+
+  self._head = node
+  self._size = self._size + 1
+end
+
+-- Retrieves a data by a position in the list
 function DoublyLinkedList:item(index)
   if index > -1 and index < self._size then
     local current = self._head
@@ -52,6 +71,7 @@ function DoublyLinkedList:remove_last()
   return self:remove(self._size - 1)
 end
 
+-- Remove a item by a position in the list
 function DoublyLinkedList:remove(index)
   if index > -1 and index < self._size then
     local current = self._head

@@ -1,6 +1,6 @@
-local LinkedList = {}
+local SinglyLinkedList = {}
 
-function LinkedList:new()
+function SinglyLinkedList:new()
   local obj = {}
   self.__index = self
   self._size = 0
@@ -10,12 +10,15 @@ function LinkedList:new()
   return setmetatable(obj, self)
 end
 
--- Add a data to the end of the list
-function LinkedList:add(data)
-  local node = {
+function SinglyLinkedList:_create_node(data)
+  return {
     data = data,
     node_next = nil
   }
+end
+
+function SinglyLinkedList:add_last(data)
+  local node = self:_create_node(data)
 
   if self._head == nil then
     self._head = node
@@ -27,8 +30,22 @@ function LinkedList:add(data)
   self._size = self._size + 1
 end
 
+function SinglyLinkedList:add_first(data)
+  local node = self:_create_node(data)
+
+  if self._head == nil then
+    self._head = node
+    self._tail = node
+  else
+    node.node_next = self._head
+    self._head = node
+  end
+
+  self._size = self._size + 1
+end
+
 -- Retrieves a data by a position in the list 
-function LinkedList:item(index)
+function SinglyLinkedList:item(index)
   if index > -1 and index < self._size then
     local current = self._head
     local i = 0
@@ -44,16 +61,16 @@ function LinkedList:item(index)
   end
 end
 
-function LinkedList:remove_first()
+function SinglyLinkedList:remove_first()
   return self:remove(0)
 end
 
-function LinkedList:remove_last()
+function SinglyLinkedList:remove_last()
   return self:remove(self._size - 1)
 end
 
 -- Remove a item by a position in the list
-function LinkedList:remove(index)
+function SinglyLinkedList:remove(index)
   if index > -1 and index < self._size then
     local current = self._head
     local previous = nil
@@ -94,9 +111,8 @@ function LinkedList:remove(index)
   end
 end
 
--- Return the number of elements in the list
-function LinkedList:size()
+function SinglyLinkedList:size()
   return self._size
 end
 
-return LinkedList
+return SinglyLinkedList
