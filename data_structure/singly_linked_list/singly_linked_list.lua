@@ -44,6 +44,14 @@ function LinkedList:item(index)
   end
 end
 
+function LinkedList:remove_first()
+  return self:remove(0)
+end
+
+function LinkedList:remove_last()
+  return self:remove(self._size - 1)
+end
+
 -- Remove a item by a position in the list
 function LinkedList:remove(index)
   if index > -1 and index < self._size then

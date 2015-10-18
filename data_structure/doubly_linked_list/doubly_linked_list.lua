@@ -21,7 +21,7 @@ function DoublyLinkedList:add(data)
     self._head = node
   else
     self._tail.node_next = node
-    self._tail.node_prev = self._tail
+    node.node_prev = self._tail
   end
 
   self._tail = node
@@ -44,6 +44,14 @@ function DoublyLinkedList:item(index)
   end
 end
 
+function DoublyLinkedList:remove_first()
+  return self:remove(0)
+end
+
+function DoublyLinkedList:remove_last()
+  return self:remove(self._size - 1)
+end
+
 function DoublyLinkedList:remove(index)
   if index > -1 and index < self._size then
     local current = self._head
@@ -60,7 +68,7 @@ function DoublyLinkedList:remove(index)
 
     elseif index == self._size - 1 then
       current = self._tail
-      current._tail = current.node_prev
+      self._tail = current.node_prev
       current.node_next = nil
 
     else
