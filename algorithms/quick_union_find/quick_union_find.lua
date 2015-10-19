@@ -31,6 +31,7 @@ end
 function UnionFind:union(p, q)
   local i = self:_root(p)
   local j = self:_root(q)
+
   self._id[i] = j
 end
 
