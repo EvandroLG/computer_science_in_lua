@@ -1,4 +1,4 @@
-package.path = './algorithms/?/?.lua;' .. package.path
+package.path = './algorithms/sorting/?/?.lua;' .. package.path
 
 local selection_sort = require 'selection_sort'
 local unittest = require 'unittest'

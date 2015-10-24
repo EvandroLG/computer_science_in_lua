@@ -1,13 +1,13 @@
-package.path = './algorithms/?/?.lua;' .. package.path
+package.path = './algorithms/sorting/?/?.lua;' .. package.path
 
-local buble_sort = require 'bubble_sort'
+local quick_sort = require 'quick_sort'
 local unittest = require 'unittest'
 local test = unittest.test
 local assert_equal = unittest.assert_equal
 
 test('order from lowest to highest', function()
   local elements = { 20, 10, 15, 9, 8 }
-  bubble_sort(elements)
+  quick_sort(elements)
 
   assert_equal(elements[1], 8)
   assert_equal(elements[2], 9)

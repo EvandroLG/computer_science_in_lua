@@ -11,4 +11,3 @@ test('create connection between 1 and 2', function()
 
   assert_equal(union_find:is_connected(1, 2), true)
 end)
-
