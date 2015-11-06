@@ -25,6 +25,10 @@ function Stack:push(item)
 end
 
 function Stack:pop()
+  if self:is_empty() then
+    return nil
+  end
+
   local item = self._head.item
   self._head = self._head.node_next
   self._size = self._size - 1

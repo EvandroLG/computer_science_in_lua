@@ -34,3 +34,8 @@ test('should return and remove the first item', function()
   assert_equal(queue:dequeue(), 'JavaScript')
   assert_equal(queue:size(), 2)
 end)
+
+test('should return nil', function()
+  local queue = Queue:new()
+  assert_equal(queue:dequeue(), nil)
+end)

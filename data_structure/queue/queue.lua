@@ -31,6 +31,10 @@ function Queue:enqueue(item)
 end
 
 function Queue:dequeue()
+  if self:is_empty() then
+    return nil
+  end
+
   self._size = self._size - 1
   local item = self._head.item
   self._head = self._head.node_next 

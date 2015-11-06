@@ -34,3 +34,8 @@ test('should return and remove the first item', function()
   assert_equal(stack:pop(), 'Lua')
   assert_equal(stack:size(), 2)
 end)
+
+test('should return nil', function()
+  local stack = Stack:new()
+  assert_equal(stack:pop(), nil)
+end)
