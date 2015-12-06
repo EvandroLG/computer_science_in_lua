@@ -7,7 +7,7 @@ function binary_search(list, item)
     middle = math.ceil((first + last) / 2)
 
     if list[middle] == item then
-      return true
+      found = true
     elseif list[middle] > item then
       last = middle - 1
     else
