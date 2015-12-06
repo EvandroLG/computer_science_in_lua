@@ -1,37 +1,3 @@
-local BSTNode = {}
-
-function BSTNode:new(value)
-  local obj = {}
-  self.__index = self
-  self._value = value
-  self._left = nil
-  self._right = nil
-end
-
-function BSTNode:add(value)
-  if value == self._value then
-    return false
-  end
-
-  if value < self._value then
-    if self._left == nil then
-      self._left = BSTNode:new(value)
-      return true
-    end
-
-    return self._left:add(value)
-  end
-
-  if value > self._value then
-    if self._right == nil then
-      self._right = BSTNode:new(value)
-      return true
-    end
-
-    return self._right:add(value)
-  end
-end
-
 local BinarySearchTree = {}
 
 function BinarySearchTree:new()
@@ -42,13 +8,62 @@ function BinarySearchTree:new()
   return setmetatable(obj, self)
 end
 
+function BinarySearchTree:create_node(value)
+  return {
+    value = value,
+    left = nil,
+    right = nil
+  }
+end
+
 function BinarySearchTree:add(value)
+  local node = self:create_node(value)
+
   if self._root == nil then
-    self._root = BSTNode:new(value) 
+    self._root = node
     return true
   end
-  
-  return self._root:add(value)
+
+  local current = self._root
+
+  while true do
+    if value < current.value then
+      if current.left == nil then
+        current.left = node
+        return true
+
+      else
+        current = current.left
+      end
+    elseif value > current.value then
+      if current.right == nil then
+        current.right = node
+        return true
+
+      else
+        current = current.right
+      end
+    else
+      return false
+    end
+  end
+end
+
+function BinarySearchTree:contains(value)
+  local found = false
+  local current = self._root
+
+  while not found and current do
+    if value < current.value then
+      current = current.left
+    elseif value > current.value then
+      current = current.right
+    else
+      found = true
+    end
+  end
+
+  return found
 end
 
 return BinarySearchTree
