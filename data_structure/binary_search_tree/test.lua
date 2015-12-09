@@ -73,3 +73,13 @@ test('should return length zero', function()
   local bst = BinarySearchTree:new()
   assert_equal(bst:size(), 0)
 end)
+
+test('should remove all nodes', function()
+  local bst = BinarySearchTree:new()
+  bst:add(10)
+  bst:add(5)
+  bst:add(15)
+
+  assert_equal(bst:destroy(), true)
+  assert_equal(bst:size(), 0)
+end)

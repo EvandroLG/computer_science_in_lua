@@ -183,19 +183,21 @@ function BinarySearchTree:size()
   return size
 end
 
+function BinarySearchTree:destroy()
+  self:traverse(function(node)
+    self:remove(node.value)
+  end)
+
+  return true
+end
+
 function BinarySearchTree:traverse(callback)
   function in_order(node)
     if node == nil then return end
 
-    if node.left ~= nil then
-      in_order(node.left)
-    end
-
-    if node.right ~= nil then
-      in_order(node.right)
-    end
-
+    in_order(node.left)
     callback(node)
+    in_order(node.right)
   end
 
   in_order(self._root)
