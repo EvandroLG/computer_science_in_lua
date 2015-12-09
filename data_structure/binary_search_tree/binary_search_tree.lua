@@ -185,17 +185,17 @@ end
 
 function BinarySearchTree:traverse(callback)
   function in_order(node)
-    if node then
-      if node.left ~= nil then
-        in_order(node.left)
-      end
+    if node == nil then return end
 
-      callback(node)
-
-      if node.right ~= nil then
-        in_order(node.right)
-      end
+    if node.left ~= nil then
+      in_order(node.left)
     end
+
+    if node.right ~= nil then
+      in_order(node.right)
+    end
+
+    callback(node)
   end
 
   in_order(self._root)
