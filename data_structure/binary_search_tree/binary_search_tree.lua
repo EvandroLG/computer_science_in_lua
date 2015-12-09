@@ -171,8 +171,34 @@ function BinarySearchTree:remove(value)
 
     return true
   end
+end
 
+function BinarySearchTree:size()
+  local size = 0
 
+  self:traverse(function()
+    size = size + 1
+  end)
+
+  return size
+end
+
+function BinarySearchTree:traverse(callback)
+  function in_order(node)
+    if node then
+      if node.left ~= nil then
+        in_order(node.left)
+      end
+
+      callback(node)
+
+      if node.right ~= nil then
+        in_order(node.right)
+      end
+    end
+  end
+
+  in_order(self._root)
 end
 
 return BinarySearchTree

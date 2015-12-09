@@ -57,3 +57,13 @@ test('should remove right node and return true', function()
   assert_equal(bst:remove(15), true)
   assert_equal(bst:contains(15), false)
 end)
+
+test('should return correct length', function()
+  local bst = BinarySearchTree:new()
+  bst:add(10)
+  bst:add(15)
+  bst:add(20)
+  bst:add(25)
+
+  assert_equal(bst:size(), 4)
+end)
