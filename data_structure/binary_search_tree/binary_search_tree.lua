@@ -191,16 +191,44 @@ function BinarySearchTree:destroy()
   return true
 end
 
-function BinarySearchTree:traverse(callback)
-  function in_order(node)
-    if node == nil then return end
+function BinarySearchTree:get_smallest()
+  function _find(node)
+    local current = node
 
-    in_order(node.left)
-    callback(node)
-    in_order(node.right)
+    while current.left ~= nil do
+      current = current.left
+    end
+
+    return current.value
   end
 
-  in_order(self._root)
+  return _find(self._root, 0)
+end
+
+function BinarySearchTree:get_biggest()
+  function _find(node)
+    local current = node
+
+    while current.right ~= nil do
+      current = current.right
+    end
+
+    return current.value
+  end
+
+  return _find(self._root, 0)
+end
+
+function BinarySearchTree:traverse(callback)
+  function _in_order(node)
+    if node == nil then return end
+
+    _in_order(node.left)
+    callback(node)
+    _in_order(node.right)
+  end
+
+  _in_order(self._root)
 end
 
 return BinarySearchTree

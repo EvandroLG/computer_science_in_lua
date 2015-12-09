@@ -83,3 +83,28 @@ test('should remove all nodes', function()
   assert_equal(bst:destroy(), true)
   assert_equal(bst:size(), 0)
 end)
+
+
+test('should return smallest value in the tree', function()
+  local bst = BinarySearchTree:new()
+  bst:add(10)
+  bst:add(5)
+  bst:add(8)
+  bst:add(15)
+  bst:add(25)
+  bst:add(1)
+
+  assert_equal(bst:get_smallest(), 1)
+end)
+
+test('should return biggest value in the tree', function()
+  local bst = BinarySearchTree:new()
+  bst:add(10)
+  bst:add(5)
+  bst:add(8)
+  bst:add(15)
+  bst:add(25)
+  bst:add(1)
+
+  assert_equal(bst:get_biggest(), 25)
+end)
