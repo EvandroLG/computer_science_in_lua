@@ -1,3 +1,11 @@
+function ternary(condition, if_true, if_false)
+  if condition then
+    return if_true
+  end
+
+  return if_false
+end
+
 local BinaryMinHeap = {}
 
 function BinaryMinHeap:new()
@@ -10,8 +18,8 @@ function BinaryMinHeap:new()
 end
 
 function BinaryMinHeap:get_minimum()
-  if (self._size == 0) then return nil end
-  return self._data[0]
+  if (self._size == 1) then return nil end
+  return self._data[1]
 end
 
 function BinaryMinHeap:add(value)
@@ -25,14 +33,53 @@ end
 function BinaryMinHeap:_sift_up(index)
   if index == 1 then return end
 
-  local parent_index = math.ceil((index) / 2)
+  -- pick up the parent index from the tree
+  local parent_index = math.floor(index / 2)
   if self._data[parent_index] < self._data[index] then return end
 
+  -- swap the elements
   local temp = self._data[parent_index]
   self._data[parent_index] = self._data[index]
   self._data[index] = temp
 
   self:_sift_up(parent_index)
+end
+
+function BinaryMinHeap:remove_min()
+  if self._size == 0 then return false end
+
+  self._data[1] = self._data[self._size]
+  self._data[self._size] = nil
+  self._size = self._size - 1
+
+  if self._size > 1 then
+    self:_sift_down(1)
+  end
+
+  return true
+end
+
+function BinaryMinHeap:_sift_down(index)
+  local left_child_index = ternary(index == 1, 2, index + 2)
+  local right_child_index = ternary(index == 1, 3, index + 3)
+  local min_index = nil
+
+  if right_child_index >= self._size then
+    if left_child_index >= self._size then return end
+    min_index = left_child_index
+  elseif self._data[left_child_index] <= self._data[right_child_index] then
+    min_index = left_child_index
+  else
+    min_index = right_child_index
+  end
+
+  if self._data[index] < self._data[min_index] then return end
+
+  local temp = self._data[child_index]
+  self._data[child_index] = self._data[index]
+  self._data[index] = temp
+
+  self:_sift_down(child_index)
 end
 
 function BinaryMinHeap:size()

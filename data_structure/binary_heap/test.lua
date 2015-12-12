@@ -20,6 +20,16 @@ test('should return the minimum value', function()
   heap:add(1)
   heap:add(3)
   
-  print(heap:get_minimum())
-  --assert_equal(heap:get_minimum(), 1)
+  assert_equal(heap:get_minimum(), 1)
+end)
+
+test('should remove the minimum value from the tree', function()
+  local heap = BinaryMinHeap:new()
+  heap:add(2)
+  heap:add(1)
+  heap:add(3)
+
+  assert_equal(heap:remove_min(), true)
+  assert_equal(heap:size(), 2)
+  assert_equal(heap:get_minimum(), 2)
 end)
