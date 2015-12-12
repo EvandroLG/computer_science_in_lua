@@ -64,10 +64,10 @@ function BinaryMinHeap:_sift_down(index)
   local right_child_index = ternary(index == 1, 3, index + 3)
   local min_index = nil
 
-  if right_child_index >= self._size then
-    if left_child_index >= self._size then return end
+  if right_child_index > self._size then
+    if left_child_index > self._size then return end
     min_index = left_child_index
-  elseif self._data[left_child_index] <= self._data[right_child_index] then
+  elseif self._data[left_child_index] < self._data[right_child_index] then
     min_index = left_child_index
   else
     min_index = right_child_index
@@ -75,11 +75,11 @@ function BinaryMinHeap:_sift_down(index)
 
   if self._data[index] < self._data[min_index] then return end
 
-  local temp = self._data[child_index]
-  self._data[child_index] = self._data[index]
+  local temp = self._data[min_index]
+  self._data[min_index] = self._data[index]
   self._data[index] = temp
 
-  self:_sift_down(child_index)
+  self:_sift_down(min_index)
 end
 
 function BinaryMinHeap:size()
