@@ -70,6 +70,9 @@ function BinarySearchTree:contains(value)
   local found = false
   local current = self._root
 
+  -- when value is less than the current node, go left
+  -- when value is greater than the current node, go right
+  -- when the values are equal, we found it!
   while not found and current do
     if value < current.value then
       current = current.left
@@ -204,10 +207,12 @@ function BinarySearchTree:get_smallest()
   function _find(node)
     local current = node
 
+    -- make a loop while there's left node
     while current.left ~= nil do
       current = current.left
     end
 
+    -- return the last node of left
     return current.value
   end
 
@@ -218,10 +223,12 @@ function BinarySearchTree:get_biggest()
   function _find(node)
     local current = node
 
+    -- make a loop while there's right node
     while current.right ~= nil do
       current = current.right
     end
 
+    -- return the last node of right
     return current.value
   end
 
@@ -229,6 +236,8 @@ function BinarySearchTree:get_biggest()
 end
 
 function BinarySearchTree:traverse(callback)
+  -- first, traverse to the left, then to root and
+  -- then to the right
   function _in_order(node)
     if node == nil then return end
 
