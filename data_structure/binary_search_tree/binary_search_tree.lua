@@ -91,6 +91,7 @@ function BinarySearchTree:remove(value)
   local current = self._root
   local parent = nil
 
+  -- search and picks up the node to remove
   while not found and current do
     if value < current.value then
       parent = current
@@ -107,14 +108,18 @@ function BinarySearchTree:remove(value)
     return false
   end
 
+  -- figure out how many children the node has
   local child_count = ternary(current.left ~= nil, 1, 0) + ternary(current.right ~= nil, 1, 0)
 
+  -- when the node is the root
   if current == self._root then
+    -- if node doesn't have children, just remove it
     if child_count == 0 then
       self._root = nil
       return true
     end
 
+    -- when it has one child, move child to the root
     if child_count == 1 then
       self._root = ternary(current.right == nil, current.left, current.right)
       return true
@@ -124,26 +129,34 @@ function BinarySearchTree:remove(value)
       local replacement = self._root.left
       local replacement_parent = nil
 
+      -- figure out the right-most leaf node to be the new root
       while replacement.right ~= nil do
         replacement_parent = replacement 
         replacement = replacement.right
       end
 
+      -- it's not the first node on the left
       if replacement_parent ~= nil then
         replacement_parent.right = replacement.left
         replacement.right = self._root.right
         replacement.left = self._root.left
       else
+        -- assign the childre
         replacement.right = self._root.right
       end
 
+      -- assign the new root
       self._root = replacement
       return true
     end
+
+  -- when value is not in the root
   else
     if child_count == 0 then
+      -- if the value is less than its parent's, null out to the left pointer
       if current.value < parent.value then
         parent.left = nil
+      -- if not, null out to the right pointer
       else
         parent.right = nil
       end
@@ -152,8 +165,10 @@ function BinarySearchTree:remove(value)
     end
 
     if child_count == 1 then
+      -- if the value is less than its parent's, reset the pointer of the left
       if current.value < parent.value then
         parent.left = ternary(current.left == nil, current.right, current.left)
+      -- if the value is greater than its parent's, reset the pointer of the right
       else
         parent.right = ternary(current.left == nil, current.right, current.left)
       end
@@ -165,11 +180,13 @@ function BinarySearchTree:remove(value)
       replacement = current.left
       replacement_parent = current
 
+      -- pick up the right-most node
       while replacement.right ~= nil do
         replacement_parent = replacement
         replacement = replacement.right
       end
 
+      -- assign children to the replacement
       replacement_parent.right = replacement.left
       replacement.right = current.right
       replacement.left = current.left
