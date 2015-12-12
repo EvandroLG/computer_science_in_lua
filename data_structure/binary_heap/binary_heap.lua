@@ -64,9 +64,12 @@ function BinaryMinHeap:_sift_down(index)
   local right_child_index = ternary(index == 1, 3, index + 3)
   local min_index = nil
 
+  -- check if indexes are valids
   if right_child_index > self._size then
     if left_child_index > self._size then return end
     min_index = left_child_index
+
+  -- pick up the minimum between left child and right child
   elseif self._data[left_child_index] < self._data[right_child_index] then
     min_index = left_child_index
   else
@@ -75,6 +78,7 @@ function BinaryMinHeap:_sift_down(index)
 
   if self._data[index] < self._data[min_index] then return end
 
+  -- swap the elements
   local temp = self._data[min_index]
   self._data[min_index] = self._data[index]
   self._data[index] = temp
