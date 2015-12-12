@@ -27,6 +27,7 @@ end
 function BinarySearchTree:add(value)
   local node = self:create_node(value)
 
+  --  if it's the first node, it's the root
   if self._root == nil then
     self._root = node
     return true
@@ -35,19 +36,27 @@ function BinarySearchTree:add(value)
   local current = self._root
 
   while true do
+    -- if the value is smaller than the current,
+    -- this value should go to left of the tree
     if value < current.value then
+      -- if there's no left node, then the new node should be create there
       if current.left == nil then
         current.left = node
         return true
-
+      -- if not, the program continues though the left node
       else
         current = current.left
       end
+
+    -- if the value is bigger than the current,
+    -- this value should go to right of the tree
     elseif value > current.value then
+      -- if there's no right node, then the new node should be create there
       if current.right == nil then
         current.right = node
         return true
 
+      -- if not, the program continues though the right node
       else
         current = current.right
       end
