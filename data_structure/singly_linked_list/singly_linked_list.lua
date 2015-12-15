@@ -112,7 +112,13 @@ function SinglyLinkedList:remove(index)
 end
 
 function SinglyLinkedList:remove_by_data(data)
-  if self._head == nil then return false end
+  if self._head == nil then return end
+
+  if self._head.data == data then
+    self._size = self._size - 1
+    self._head = self._head.node_next
+    return
+  end
 
   local current = self._head
   local previous = nil
@@ -123,7 +129,7 @@ function SinglyLinkedList:remove_by_data(data)
     current = current.node_next
   end
 
-  if current == nil then return false end
+  if current == nil then return end
 
   if previous ~= nil then
     previous.node_next = current.node_next
