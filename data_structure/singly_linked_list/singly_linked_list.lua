@@ -123,19 +123,15 @@ function SinglyLinkedList:remove_by_data(data)
   local current = self._head
   local previous = nil
 
-  while current ~= nil do
-    if current.data == data then break end
-    previous = current
+  while current.node_next ~= nil do
+    if current.node_next.data == data then
+      self._size = self._size - 1
+      current.node_next = current.node_next.node_next
+      return
+    end
+
     current = current.node_next
   end
-
-  if current == nil then return end
-
-  if previous ~= nil then
-    previous.node_next = current.node_next
-  end
-
-  self._size = self._size - 1
 end
 
 function SinglyLinkedList:size()
