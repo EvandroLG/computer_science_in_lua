@@ -109,6 +109,42 @@ function DoublyLinkedList:remove(index)
   end
 end
 
+
+function DoublyLinkedList:remove_by_data(data)
+  if self._head == nil then
+    return
+  end
+
+  if self._head.data == data then
+    self._head = self._head.node_next
+    self._size = self._size - 1
+
+    return
+  end
+
+  local current = self._head
+
+  while current.node_next do
+    if current.node_next.data == data then
+      local prev = current.node_next.node_prev
+
+      if current.node_next.node_next == nil then
+        prev.node_next = nil
+      else
+        current.node_next = current.node_next.node_next
+        current.node_next.node_prev = prev
+        prev.node_next = current.node_next
+      end
+
+      self._size = self._size - 1
+
+      return
+    end
+
+    current = current.node_next
+  end
+end
+
 function DoublyLinkedList:size()
   return self._size
 end
