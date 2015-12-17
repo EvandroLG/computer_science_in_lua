@@ -113,7 +113,7 @@ function _add_datas()
   local bst = BinarySearchTree:new()
   bst:add(10)
   bst:add(5)
-  bst:add(8)
+  bst:add(12)
   bst:add(4)
 
   return bst
@@ -130,8 +130,8 @@ test('in_order', function()
 
   assert_equal(output[1], 4)
   assert_equal(output[2], 5)
-  assert_equal(output[3], 8)
-  assert_equal(output[4], 10)
+  assert_equal(output[3], 10)
+  assert_equal(output[4], 12)
 end)
 
 test('pre_order', function()
@@ -146,5 +146,22 @@ test('pre_order', function()
   assert_equal(output[1], 10)
   assert_equal(output[2], 5)
   assert_equal(output[3], 4)
-  assert_equal(output[4], 8)
+  assert_equal(output[4], 12)
+end)
+
+test('post_order', function()
+  local bst = _add_datas()
+
+  local output = {}
+
+  bst:post_order(function(node)
+    table.insert(output, node.value)
+  end)
+
+  assert_equal(output[1], 4)
+  assert_equal(output[2], 5)
+  assert_equal(output[3], 12)
+  assert_equal(output[4], 10)
+  --assert_equal(output[3], 8)
+  --assert_equal(output[4], 10)
 end)

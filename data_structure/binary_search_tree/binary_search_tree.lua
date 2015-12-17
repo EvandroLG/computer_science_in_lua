@@ -278,6 +278,19 @@ function BinarySearchTree:pre_order(callback)
   _pre_order(self._root)
 end
 
+function BinarySearchTree:post_order(callback)
+  function _post_order(node)
+    if node == nil then return end
+
+    _post_order(node.left)
+    _post_order(node.right)
+    callback(node)
+  end
+
+
+  _post_order(self._root)
+end
+
 function BinarySearchTree:traverse(callback)
   self:in_order(callback)
 end
