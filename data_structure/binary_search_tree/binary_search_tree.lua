@@ -16,7 +16,14 @@ function BinarySearchTree:new()
   return setmetatable(obj, self)
 end
 
-function BinarySearchTree:create_node(value)
+function BinarySearchTree:is_root(value)
+  return self._root.value == value
+end
+
+function BinarySearchTree:is_leaf(value)
+end
+
+function BinarySearchTree:_create_node(value)
   return {
     value = value,
     left = nil,
@@ -25,7 +32,7 @@ function BinarySearchTree:create_node(value)
 end
 
 function BinarySearchTree:add(value)
-  local node = self:create_node(value)
+  local node = self:_create_node(value)
 
   --  if it's the first node, it's the root
   if self._root == nil then

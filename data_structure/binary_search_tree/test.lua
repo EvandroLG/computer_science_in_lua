@@ -16,7 +16,6 @@ test('should add on the left and return true', function()
   assert_equal(bst:add(5), true)
 end)
 
-
 test('should add on the right and return true', function()
   local bst = BinarySearchTree:new()
   assert_equal(bst:add(5), true)
@@ -162,4 +161,20 @@ test('post_order', function()
   assert_equal(output[2], 5)
   assert_equal(output[3], 12)
   assert_equal(output[4], 10)
+end)
+
+test('should return false', function()
+  local bst = BinarySearchTree:new()
+  bst:add(10)
+  bst:add(5)
+
+  assert_equal(bst:is_root(5), false)
+end)
+
+test('should return false', function()
+  local bst = BinarySearchTree:new()
+  bst:add(10)
+  bst:add(5)
+
+  assert_equal(bst:is_root(10), true)
 end)
