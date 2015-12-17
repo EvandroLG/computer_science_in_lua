@@ -252,7 +252,7 @@ function BinarySearchTree:get_biggest()
   return _find(self._root, 0)
 end
 
-function BinarySearchTree:traverse(callback)
+function BinarySearchTree:in_order(callback)
   -- first, traverse to the left, then to root and
   -- then to the right
   function _in_order(node)
@@ -264,6 +264,22 @@ function BinarySearchTree:traverse(callback)
   end
 
   _in_order(self._root)
+end
+
+function BinarySearchTree:pre_order(callback)
+  function _pre_order(node)
+    if node == nil then return end
+
+    callback(node)
+    _pre_order(node.left)
+    _pre_order(node.right)
+  end
+
+  _pre_order(self._root)
+end
+
+function BinarySearchTree:traverse(callback)
+  self:in_order(callback)
 end
 
 return BinarySearchTree

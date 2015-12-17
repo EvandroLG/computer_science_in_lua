@@ -108,3 +108,43 @@ test('should return biggest value in the tree', function()
 
   assert_equal(bst:get_biggest(), 25)
 end)
+
+function _add_datas()
+  local bst = BinarySearchTree:new()
+  bst:add(10)
+  bst:add(5)
+  bst:add(8)
+  bst:add(4)
+
+  return bst
+end
+
+test('in_order', function()
+  local bst = _add_datas()
+
+  local output = {}
+
+  bst:in_order(function(node)
+    table.insert(output, node.value)
+  end)
+
+  assert_equal(output[1], 4)
+  assert_equal(output[2], 5)
+  assert_equal(output[3], 8)
+  assert_equal(output[4], 10)
+end)
+
+test('pre_order', function()
+  local bst = _add_datas()
+
+  local output = {}
+
+  bst:pre_order(function(node)
+    table.insert(output, node.value)
+  end)
+
+  assert_equal(output[1], 10)
+  assert_equal(output[2], 5)
+  assert_equal(output[3], 4)
+  assert_equal(output[4], 8)
+end)
