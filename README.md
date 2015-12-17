@@ -1,4 +1,4 @@
-# computer_science_in_lua
+# Computer Science in Lua
 It's a collection of implementations of classic algorithms and data structures that I've written in Lua.
 
 ## Main study sources
