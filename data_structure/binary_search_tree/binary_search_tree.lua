@@ -267,6 +267,9 @@ function BinarySearchTree:in_order(callback)
 end
 
 function BinarySearchTree:pre_order(callback)
+  -- first of all, root
+  -- after traverse to left and
+  -- then to the right
   function _pre_order(node)
     if node == nil then return end
 
@@ -279,6 +282,9 @@ function BinarySearchTree:pre_order(callback)
 end
 
 function BinarySearchTree:post_order(callback)
+  -- first, traverse to left
+  -- then to right
+  -- then to root
   function _post_order(node)
     if node == nil then return end
 
