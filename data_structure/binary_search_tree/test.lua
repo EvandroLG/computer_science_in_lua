@@ -163,7 +163,7 @@ test('post_order', function()
   assert_equal(output[4], 10)
 end)
 
-test('should return false', function()
+test('is_root should return false', function()
   local bst = BinarySearchTree:new()
   bst:add(10)
   bst:add(5)
@@ -171,10 +171,37 @@ test('should return false', function()
   assert_equal(bst:is_root(5), false)
 end)
 
-test('should return false', function()
+test('is_root should return false', function()
   local bst = BinarySearchTree:new()
   bst:add(10)
   bst:add(5)
 
   assert_equal(bst:is_root(10), true)
+end)
+
+test('is_leaf should return false', function()
+  local bst = BinarySearchTree:new()
+  bst:add(10)
+  bst:add(5)
+  bst:add(4)
+
+  assert_equal(bst:is_leaf(5), false)
+end)
+
+test('is_leaf should return false when it does not find the value', function()
+  local bst = BinarySearchTree:new()
+  bst:add(10)
+  bst:add(5)
+  bst:add(4)
+
+  assert_equal(bst:is_leaf(7), false)
+end)
+
+test('is_leaf should return true', function()
+  local bst = BinarySearchTree:new()
+  bst:add(10)
+  bst:add(5)
+  bst:add(4)
+
+  assert_equal(bst:is_leaf(4), true)
 end)

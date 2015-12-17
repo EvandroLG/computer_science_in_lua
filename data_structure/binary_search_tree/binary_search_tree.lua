@@ -21,6 +21,24 @@ function BinarySearchTree:is_root(value)
 end
 
 function BinarySearchTree:is_leaf(value)
+  local found = false
+  local current = self._root
+
+  while found == false and current ~= nil do
+    -- if value is smaller than current, then to go the left
+    if value < current.value then
+      current = current.left
+    -- if value is bigger than current, then to go the right
+    elseif value > current.value then
+      current = current.right
+    -- else we found it! :D
+    else
+      found = true
+    end
+  end
+
+  -- if node doesn't have children, it's a leaf
+  return found and current.left == nil and current.right == nil
 end
 
 function BinarySearchTree:_create_node(value)
