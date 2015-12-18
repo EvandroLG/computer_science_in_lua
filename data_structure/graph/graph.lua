@@ -39,4 +39,16 @@ function Graph:add_vertex(vertex)
   return false
 end
 
+function Graph:add_edge(edge)
+  if type(edge) ~= 'table' then return false end
+
+  if self._graph[edge[1]] == nil then
+    self._graph[edge[1]] = {edge[2]}
+  else
+    table.insert(self._graph[edge[1]], edge[2])
+  end
+
+  return true
+end
+
 return Graph

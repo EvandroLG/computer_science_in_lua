@@ -62,3 +62,30 @@ test('should not add vertex', function()
   assert_equal(graph:add_vertex('b'), false)
   assert_equal(#graph:get_vertices(), 2)
 end)
+
+test('should not add edge', function()
+  local graph = Graph:new({})
+
+  assert_equal(graph:add_edge('a'), false)
+  assert_equal(#graph:get_vertices(), 0)
+end)
+
+test('add edge in a new vertex', function()
+  local graph = Graph:new({})
+
+  assert_equal(graph:add_edge({'a', 'b'}), true)
+  assert_equal(#graph:get_vertices(), 1)
+
+  local edge = graph:get_edges()
+  assert_equal(edge[1][1], 'a')
+  assert_equal(edge[1][2], 'b')
+end)
+
+test('add edge in a old vertex', function()
+  local graph = Graph:new({
+    ['a'] = {'b'}
+  })
+
+  assert_equal(graph:add_edge({'a', 'c'}), true)
+  assert_equal(#graph:get_vertices(), 1)
+end)
