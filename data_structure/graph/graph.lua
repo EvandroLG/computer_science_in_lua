@@ -73,6 +73,18 @@ function Graph:remove_edge(edge)
 end
 
 function Graph:remove_vertex(vertex)
+  self._graph[vertex] = nil
+
+  for k, obj in pairs(self._graph) do
+    for key in pairs(obj) do
+      if obj[key] == vertex then
+        table.remove(obj, key)
+        break
+      end
+    end
+  end
+
+  return true
 end
 
 function Graph:destroy()
