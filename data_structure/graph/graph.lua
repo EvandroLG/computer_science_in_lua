@@ -1,3 +1,11 @@
+function is_in_table(object, item)
+  for key, value in ipairs(object) do
+    if value == item then return true end
+  end
+
+  return false
+end
+
 local Graph = {}
 
 function Graph:new(graph)
@@ -49,6 +57,29 @@ function Graph:add_edge(edge)
   end
 
   return true
+end
+
+function Graph:find_path(start_vertex, end_vertex, path)
+  path = path or {}
+  table.insert(path, start_vertex)
+
+  if start_vertex == end_vertex then
+    return path
+  end
+
+  if self._graph[start_vertex] == nil then
+    return nil
+  end
+
+  local extended_path = nil
+
+  for k, vertex in pairs(self._graph[start_vertex]) do
+    if is_in_table(path, vertex) then break end
+    extended_path = self:find_path(vertex, end_vertex, path)
+    if extended_path ~= nil then return extended_path end
+  end
+
+  return nil
 end
 
 return Graph

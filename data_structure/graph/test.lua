@@ -89,3 +89,28 @@ test('add edge in a old vertex', function()
   assert_equal(graph:add_edge({'a', 'c'}), true)
   assert_equal(#graph:get_vertices(), 1)
 end)
+
+test('find complete path between two vertices', function()
+  local graph = Graph:new({
+    ['a'] = {'b'},
+    ['b'] = {'c'}
+  })
+
+  path = graph:find_path('a', 'c')
+
+  assert_equal(#path, 3)
+  assert_equal(path[1], 'a')
+  assert_equal(path[2], 'b')
+  assert_equal(path[3], 'c')
+end)
+
+test('return nil when path between two vertices does not exist', function()
+  local graph = Graph:new({
+    ['a'] = {'b'},
+    ['b'] = {'c'}
+  })
+
+  path = graph:find_path('a', 'd')
+
+  assert_equal(path, nil)
+end)
