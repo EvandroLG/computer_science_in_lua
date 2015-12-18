@@ -60,6 +60,16 @@ function Graph:add_edge(edge)
 end
 
 function Graph:remove_edge(edge)
+  if self._graph[edge[1]] ~= nil then
+    for key, value in pairs(self._graph[edge[1]]) do
+      if value == edge[2] then
+        self._graph[edge[1]][key] = nil
+        return true
+      end
+    end
+  end
+
+  return false
 end
 
 function Graph:remove_vertex(vertex)

@@ -90,6 +90,24 @@ test('add edge in a old vertex', function()
   assert_equal(#graph:get_vertices(), 1)
 end)
 
+test('remove edge', function()
+  local graph = Graph:new({
+    ['a'] = {'b'}
+  })
+
+  assert_equal(graph:remove_edge({'a', 'b'}), true)
+  assert_equal(#graph:get_edges(), 0)
+end)
+
+test('should not any remove edge', function()
+  local graph = Graph:new({
+    ['a'] = {'b'}
+  })
+
+  assert_equal(graph:remove_edge({'a', 'c'}), false)
+  assert_equal(#graph:get_edges(), 1)
+end)
+
 test('find complete path between two vertices', function()
   local graph = Graph:new({
     ['a'] = {'b'},
