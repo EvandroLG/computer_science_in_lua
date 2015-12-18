@@ -96,7 +96,7 @@ test('find complete path between two vertices', function()
     ['b'] = {'c'}
   })
 
-  path = graph:find_path('a', 'c')
+  local path = graph:find_path('a', 'c')
 
   assert_equal(#path, 3)
   assert_equal(path[1], 'a')
@@ -110,7 +110,15 @@ test('return nil when path between two vertices does not exist', function()
     ['b'] = {'c'}
   })
 
-  path = graph:find_path('a', 'd')
+  assert_equal(graph:find_path('a', 'd'), nil)
+end)
 
-  assert_equal(path, nil)
+test('return all paths between two vertices', function()
+  local graph = Graph:new({
+    ['a'] = {'b', 'c'},
+    ['b'] = {'d'},
+    ['c'] = {'d'}
+  })
+
+  --local paths = graph:find_all_paths('a', 'd')
 end)

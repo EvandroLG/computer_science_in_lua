@@ -59,6 +59,15 @@ function Graph:add_edge(edge)
   return true
 end
 
+function Graph:remove_edge(edge)
+end
+
+function Graph:remove_vertex(vertex)
+end
+
+function Graph:destroy()
+end
+
 function Graph:find_path(start_vertex, end_vertex, path)
   path = path or {}
   table.insert(path, start_vertex)
@@ -80,6 +89,33 @@ function Graph:find_path(start_vertex, end_vertex, path)
   end
 
   return nil
+end
+
+function Graph:find_all_paths(start_vertex, end_vertex, path)
+  path = path or {}
+  table.insert(path, start_vertex)
+
+  if start_vertex == end_vertex then
+    return path
+  end
+
+  if self._graph[start_vertex] == nil then
+    return {}
+  end
+
+  paths = {}
+
+  for k, vertex in pairs(self._graph[start_vertex]) do
+    if not is_in_table(path, vertex) then
+      extended_path = self:find_all_paths(vertex, end_vertex, path)
+
+      for key, value in pairs(extended_path) do
+        table.insert(paths, value)
+      end
+    end
+  end
+
+  return paths
 end
 
 return Graph
