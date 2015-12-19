@@ -6,12 +6,28 @@ function is_in_table(object, item)
   return false
 end
 
+function shallow_copy(orig)
+    local orig_type = type(orig)
+    local copy
+
+    if orig_type == 'table' then
+        copy = {}
+        for orig_key, orig_value in pairs(orig) do
+            copy[orig_key] = orig_value
+        end
+    else
+        copy = orig
+    end
+
+    return copy
+end
+
 local Graph = {}
 
 function Graph:new(graph)
   local obj = {}
   self.__index = self
-  self._graph = graph
+  self._graph = graph or {}
 
   return setmetatable(obj, self)
 end
@@ -145,7 +161,7 @@ end
 function Graph:find_shortest_path(start_vertex, end_vertex, _path)
   -- if the _path is nil, then set a table
   -- then, add start_vertex in the path table
-  local path = _path or {}
+  local path = shallow_copy(_path) or {}
   table.insert(path, start_vertex)
 
   -- if start_vertex and end_vertex are the same, then we found a path
@@ -175,6 +191,42 @@ function Graph:find_shortest_path(start_vertex, end_vertex, _path)
   end
 
   return shortest
+end
+
+function Graph:find_all_paths(start_vertex, end_vertex, _path)
+  -- if path is nil, set a new table
+  -- then add start_vertext in the path table
+  local path = shallow_copy(_path) or {}
+  table.insert(path, start_vertex)
+
+  -- if the start_vertext and end_vertex are the same, we found a path
+  if start_vertex == end_vertex then
+    return {path}
+  end
+
+  if self._graph[start_vertex] == nil then
+    return {}
+  end
+
+  local paths = {}
+  local new_path = nil
+
+  -- visit every vertces that's connected to the start_vertex
+  for k, vertex in pairs(self._graph[start_vertex]) do
+    -- if vertex is in the path table, then ignore it
+    if is_in_table(path, vertex) then break end
+
+    -- call the function recursively passing the new vertex in the place of start_vertex 
+    new_path = self:find_all_paths(vertex, end_vertex, path)
+
+    -- add the new path in paths table
+    for _k, obj in pairs(new_path) do
+      table.insert(paths, obj)
+    end
+  end
+
+  -- return all paths
+  return paths
 end
 
 return Graph

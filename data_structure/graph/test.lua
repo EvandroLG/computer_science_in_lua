@@ -152,3 +152,32 @@ test('return nil when path between two vertices does not exist', function()
 
   assert_equal(graph:find_path('a', 'd'), nil)
 end)
+
+test('return the shortest path between two vertices', function()
+  local graph = Graph:new({
+    ['a'] = {'b', 'c'},
+    ['b'] = {'c'},
+    ['c'] = {'d'}
+  })
+
+  local path = graph:find_shortest_path('a', 'd')
+
+  assert_equal(#path, 3)
+  assert_equal(path[1], 'a')
+  assert_equal(path[2], 'c')
+  assert_equal(path[3], 'd')
+end)
+
+test('return all possible paths between two vertices', function()
+  local graph = Graph:new({
+    ['a'] = {'b', 'c'},
+    ['b'] = {'c'},
+    ['c'] = {'d'}
+  })
+
+  local paths = graph:find_all_paths('a', 'd')
+
+  assert_equal(#paths, 2)
+  assert_equal(#paths[1], 4)
+  assert_equal(#paths[2], 3)
+end)
