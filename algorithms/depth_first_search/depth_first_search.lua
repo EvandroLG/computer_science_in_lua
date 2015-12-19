@@ -26,14 +26,16 @@ function depth_first_search(graph, start)
   while #stack > 0 do
     vertex = table.remove(stack)
 
+    -- check if node is marked
     if not _is_in_table(visited, vertex) then
+      -- mark current vertex as visited
       table.insert(visited, vertex)
-      -- then add in the stack every node that's connect to
-      -- the current vertex, less the already visited nodes
+      -- then add in the stack every adjacent that's not marked as visited
       stack = _diff(graph[vertex], visited)
     end
   end
 
+  -- return all the nodes that are marked as visited
   return visited
 end
 
