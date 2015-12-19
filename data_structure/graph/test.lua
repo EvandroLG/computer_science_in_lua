@@ -73,7 +73,7 @@ end)
 test('add edge in a new vertex', function()
   local graph = Graph:new({})
 
-  assert_equal(graph:add_edge({'a', 'b'}), true)
+  assert_equal(graph:add_edge('a', 'b'), true)
   assert_equal(#graph:get_vertices(), 1)
 
   local edge = graph:get_edges()
@@ -86,7 +86,7 @@ test('add edge in a old vertex', function()
     ['a'] = {'b'}
   })
 
-  assert_equal(graph:add_edge({'a', 'c'}), true)
+  assert_equal(graph:add_edge('a', 'c'), true)
   assert_equal(#graph:get_vertices(), 1)
 end)
 
@@ -95,7 +95,7 @@ test('remove edge', function()
     ['a'] = {'b'}
   })
 
-  assert_equal(graph:remove_edge({'a', 'b'}), true)
+  assert_equal(graph:remove_edge('a', 'b'), true)
   assert_equal(#graph:get_edges(), 0)
 end)
 
@@ -104,7 +104,7 @@ test('should not any remove edge', function()
     ['a'] = {'b'}
   })
 
-  assert_equal(graph:remove_edge({'a', 'c'}), false)
+  assert_equal(graph:remove_edge('a', 'c'), false)
   assert_equal(#graph:get_edges(), 1)
 end)
 
@@ -152,24 +152,3 @@ test('return nil when path between two vertices does not exist', function()
 
   assert_equal(graph:find_path('a', 'd'), nil)
 end)
-
---test('return all paths between two vertices', function()
-  --local graph = Graph:new({
-    --['a'] = {'b', 'c'},
-    --['b'] = {'c'},
-    --['c'] = {'d'}
-  --})
-
-  --local paths = graph:find_all_paths('a', 'd')
---end)
-
---test('shortest find path', function()
-  --local graph = Graph:new({
-    --['a'] = {'b', 'c'},
-    --['b'] = {'c'},
-    --['c'] = {'d'}
-  --})
-
-  --local path = graph:find_shortest_path('a', 'd')
-  --print(#path)
---end)

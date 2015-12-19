@@ -19,6 +19,7 @@ end
 function Graph:get_vertices()
   local vertices = {}
 
+  -- pick up every vertice and return in a new table
   for k in pairs(self._graph) do 
     table.insert(vertices, k)
   end
@@ -29,6 +30,8 @@ end
 function Graph:get_edges()
   local edges = {}
 
+  -- visit every vertice and its edges
+  -- then storage every edges in a new table
   for vertex in pairs(self._graph) do
     for k, neighbour in pairs(self._graph[vertex]) do 
       table.insert(edges, { vertex, neighbour })
@@ -39,44 +42,59 @@ function Graph:get_edges()
 end
 
 function Graph:add_vertex(vertex)
+  -- if vertex doesn't exist, create as a index in the graph table
+  -- and return true
   if self._graph[vertex] == nil then
     self._graph[vertex] = {}
     return true
   end
 
+  -- if not, just return false
   return false
 end
 
-function Graph:add_edge(edge)
-  if type(edge) ~= 'table' then return false end
+function Graph:add_edge(first, second)
+  -- check if types are valids
+  if type(first) ~= 'string' or type(second) ~= 'string' then
+    return false
+  end
 
-  if self._graph[edge[1]] == nil then
-    self._graph[edge[1]] = {edge[2]}
+  -- if there's no index to first item, add it
+  -- and pass the conection into a table
+  if self._graph[first] == nil then
+    self._graph[first] = {second}
+  -- if there's, we simply add the second item in the table that already exists
   else
-    table.insert(self._graph[edge[1]], edge[2])
+    table.insert(self._graph[first], second)
   end
 
   return true
 end
 
-function Graph:remove_edge(edge)
-  if self._graph[edge[1]] ~= nil then
-    for key, value in pairs(self._graph[edge[1]]) do
-      if value == edge[2] then
-        self._graph[edge[1]][key] = nil
+function Graph:remove_edge(first, second)
+  -- if first is a vertex in the graph
+  if self._graph[first] ~= nil then
+    -- then, pick up the second value and update it to nil
+    for key, value in pairs(self._graph[first]) do
+      if value == second then
+        self._graph[first][key] = nil
         return true
       end
     end
   end
 
+  -- if first isn't a vertex in the graph, just return false
   return false
 end
 
 function Graph:remove_vertex(vertex)
+  -- if there's no vertex, just return false
   if self._graph[vertex] == nil then return false end
 
+  -- if there's vertex, we set it as nil
   self._graph[vertex] = nil
 
+  -- then, remove every connection with other vertices
   for k, obj in pairs(self._graph) do
     for key in pairs(obj) do
       if obj[key] == vertex then
@@ -92,10 +110,13 @@ end
 function Graph:destroy()
 end
 
-function Graph:find_path(start_vertex, end_vertex, path)
-  path = path or {}
+function Graph:find_path(start_vertex, end_vertex, _path)
+  -- if the _path is nil, then set a table
+  -- then, add start_vertex in the path table
+  local path = _path or {}
   table.insert(path, start_vertex)
 
+  -- if start_vertex and end_vertex are the same, then we completed a path :D
   if start_vertex == end_vertex then
     return path
   end
@@ -106,9 +127,15 @@ function Graph:find_path(start_vertex, end_vertex, path)
 
   local extended_path = nil
 
+  -- visit every vertex that's connected to the start_vertex
   for k, vertex in pairs(self._graph[start_vertex]) do
+    -- case it's in the path, ignore
     if is_in_table(path, vertex) then break end
+
+    -- call the function recursively passing the new vertex in place of start_vertex
     extended_path = self:find_path(vertex, end_vertex, path)
+
+    -- then, if it return a table, the program found a path! :D
     if extended_path ~= nil then return extended_path end
   end
 
@@ -116,9 +143,12 @@ function Graph:find_path(start_vertex, end_vertex, path)
 end
 
 function Graph:find_shortest_path(start_vertex, end_vertex, _path)
+  -- if the _path is nil, then set a table
+  -- then, add start_vertex in the path table
   local path = _path or {}
   table.insert(path, start_vertex)
 
+  -- if start_vertex and end_vertex are the same, then we found a path
   if start_vertex == end_vertex then
     return path
   end
@@ -130,11 +160,15 @@ function Graph:find_shortest_path(start_vertex, end_vertex, _path)
   local shortest = nil
   local new_path = nil
 
+  -- visit every vertex that's connected to the start_vertex
   for k, vertex in pairs(self._graph[start_vertex]) do
+    -- case it's in the path, ignore
     if is_in_table(path, vertex) then break end
 
+    -- call the function recursively passing the new vertex in place of start_vertex
     new_path = self:find_shortest_path(vertex, end_vertex, path)
 
+    -- then, if the new_path has less elements than shortest, we updated the shortest is the new_path
     if (new_path ~= nil and shortest == nil) or (shortest ~= nil and #new_path < #shortest) then
       shortest = new_path
     end
