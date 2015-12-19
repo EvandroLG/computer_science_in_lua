@@ -1,9 +1,3 @@
-local swap = function(elements, first, second)
-  local temp = elements[first]
-  elements[first] = elements[second]
-  elements[second] = temp
-end
-
 local selection_sort = function(elements)
   local size = #elements
   local min
@@ -18,7 +12,7 @@ local selection_sort = function(elements)
     end
 
     if i ~= min then
-      swap(elements, i, min)
+      elements[i], elements[min] = elements[min], elements[i]
     end
   end
 end
