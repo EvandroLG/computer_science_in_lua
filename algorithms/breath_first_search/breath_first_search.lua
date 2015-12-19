@@ -19,25 +19,19 @@ function _diff(first_table, second_table)
   return output
 end
 
-function depth_first_search(graph, start)
+function breath_first_search(graph, start)
   local visited = {}
-  local stack = {start}
+  local queue = { start }
   local vertex = nil
 
-  while #stack > 0 do
-    vertex = table.remove(stack) -- pop function in lua
+  while #queue > 0 do
+    vertex = table.remove(queue, 1)
 
-    -- check if node is marked
     if not _is_in_table(visited, vertex) then
-      -- mark current vertex as visited
       table.insert(visited, vertex)
-      -- then add in the stack every adjacent that's not marked as visited
-      stack = _diff(graph[vertex], visited)
+      queue = _diff(queue, visited)
     end
   end
 
-  -- return all the nodes that are marked as visited
   return visited
 end
-
-return depth_first_search
