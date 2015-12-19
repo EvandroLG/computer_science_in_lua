@@ -115,31 +115,32 @@ function Graph:find_path(start_vertex, end_vertex, path)
   return nil
 end
 
-function Graph:find_all_paths(start_vertex, end_vertex, path)
-  path = path or {}
+function Graph:find_shortest_path(start_vertex, end_vertex, _path)
+  local path = _path or {}
   table.insert(path, start_vertex)
 
   if start_vertex == end_vertex then
     return path
   end
-
+ 
   if self._graph[start_vertex] == nil then
-    return {}
+    return nil
   end
 
-  paths = {}
+  local shortest = nil
+  local new_path = nil
 
   for k, vertex in pairs(self._graph[start_vertex]) do
-    if not is_in_table(path, vertex) then
-      extended_path = self:find_all_paths(vertex, end_vertex, path)
+    if is_in_table(path, vertex) then break end
 
-      for key, value in pairs(extended_path) do
-        table.insert(paths, value)
-      end
+    new_path = self:find_shortest_path(vertex, end_vertex, path)
+
+    if (new_path ~= nil and shortest == nil) or (shortest ~= nil and #new_path < #shortest) then
+      shortest = new_path
     end
   end
 
-  return paths
+  return shortest
 end
 
 return Graph
