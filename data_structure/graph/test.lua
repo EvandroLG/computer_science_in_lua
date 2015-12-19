@@ -121,6 +121,15 @@ test('remove vertex', function()
   assert_equal(#graph:get_edges(), 0)
 end)
 
+test('should return false when can not remove vertex', function()
+  local graph = Graph:new({
+    ['a'] = {'b'},
+    ['b'] = {}
+  })
+
+  assert_equal(graph:remove_vertex('c'), false)
+end)
+
 test('find complete path between two vertices', function()
   local graph = Graph:new({
     ['a'] = {'b'},

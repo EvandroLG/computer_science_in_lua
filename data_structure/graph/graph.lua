@@ -73,6 +73,8 @@ function Graph:remove_edge(edge)
 end
 
 function Graph:remove_vertex(vertex)
+  if self._graph[vertex] == nil then return false end
+
   self._graph[vertex] = nil
 
   for k, obj in pairs(self._graph) do
