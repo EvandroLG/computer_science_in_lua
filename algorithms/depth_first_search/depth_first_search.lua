@@ -25,7 +25,7 @@ function depth_first_search(graph, start)
   local vertex = nil
 
   while #stack > 0 do
-    vertex = table.remove(stack) -- pop function in lua
+    vertex = table.remove(stack) -- i.e pop()
 
     -- check if node is marked
     if not _is_in_table(visited, vertex) then

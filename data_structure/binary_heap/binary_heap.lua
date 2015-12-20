@@ -38,9 +38,7 @@ function BinaryMinHeap:_sift_up(index)
   if self._data[parent_index] < self._data[index] then return end
 
   -- swap the elements
-  local temp = self._data[parent_index]
-  self._data[parent_index] = self._data[index]
-  self._data[index] = temp
+  self._data[parent_index], self._data[index] = self._data[index], self._data[parent_index]
 
   self:_sift_up(parent_index)
 end

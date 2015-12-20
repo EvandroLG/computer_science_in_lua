@@ -25,7 +25,7 @@ function breath_first_search(graph, start)
   local vertex = nil
 
   while #queue > 0 do
-    vertex = table.remove(queue, 1) -- dequeue
+    vertex = table.remove(queue, 1) -- i.e dequeue
 
     -- check if node is marked
     if not _is_in_table(visited, vertex) then
