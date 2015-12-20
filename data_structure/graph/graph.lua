@@ -146,13 +146,13 @@ function Graph:find_path(start_vertex, end_vertex, _path)
   -- visit every vertex that's connected to the start_vertex
   for k, vertex in pairs(self._graph[start_vertex]) do
     -- case it's in the path, ignore
-    if is_in_table(path, vertex) then break end
+    if not is_in_table(path, vertex) then
+      -- call the function recursively passing the new vertex in place of start_vertex
+      extended_path = self:find_path(vertex, end_vertex, path)
 
-    -- call the function recursively passing the new vertex in place of start_vertex
-    extended_path = self:find_path(vertex, end_vertex, path)
-
-    -- then, if it return a table, the program found a path! :D
-    if extended_path ~= nil then return extended_path end
+      -- then, if it return a table, the program found a path! :D
+      if extended_path ~= nil then return extended_path end
+    end
   end
 
   return nil
@@ -179,14 +179,14 @@ function Graph:find_shortest_path(start_vertex, end_vertex, _path)
   -- visit every vertex that's connected to the start_vertex
   for k, vertex in pairs(self._graph[start_vertex]) do
     -- case it's in the path, ignore
-    if is_in_table(path, vertex) then break end
+    if not is_in_table(path, vertex) then
+      -- call the function recursively passing the new vertex in place of start_vertex
+      new_path = self:find_shortest_path(vertex, end_vertex, path)
 
-    -- call the function recursively passing the new vertex in place of start_vertex
-    new_path = self:find_shortest_path(vertex, end_vertex, path)
-
-    -- then, if the new_path has less elements than shortest, we updated the shortest is the new_path
-    if (new_path ~= nil and shortest == nil) or (shortest ~= nil and #new_path < #shortest) then
-      shortest = new_path
+      -- then, if the new_path has less elements than shortest, we updated the shortest is the new_path
+      if (new_path ~= nil and shortest == nil) or (shortest ~= nil and #new_path < #shortest) then
+        shortest = new_path
+      end
     end
   end
 
@@ -214,14 +214,14 @@ function Graph:find_all_paths(start_vertex, end_vertex, _path)
   -- visit every vertces that's connected to the start_vertex
   for k, vertex in pairs(self._graph[start_vertex]) do
     -- if vertex is in the path table, then ignore it
-    if is_in_table(path, vertex) then break end
+    if not is_in_table(path, vertex) then
+      -- call the function recursively passing the new vertex in the place of start_vertex
+      new_path = self:find_all_paths(vertex, end_vertex, path)
 
-    -- call the function recursively passing the new vertex in the place of start_vertex 
-    new_path = self:find_all_paths(vertex, end_vertex, path)
-
-    -- add the new path in paths table
-    for _k, obj in pairs(new_path) do
-      table.insert(paths, obj)
+      -- add the new path in paths table
+      for _k, obj in pairs(new_path) do
+        table.insert(paths, obj)
+      end
     end
   end
 

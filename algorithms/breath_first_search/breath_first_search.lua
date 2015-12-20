@@ -25,13 +25,17 @@ function breath_first_search(graph, start)
   local vertex = nil
 
   while #queue > 0 do
-    vertex = table.remove(queue, 1)
+    vertex = table.remove(queue, 1) -- dequeue
 
+    -- check if node is marked
     if not _is_in_table(visited, vertex) then
+      -- mark current vertex as visited
       table.insert(visited, vertex)
-      queue = _diff(queue, visited)
+      -- then add in the queue every adjacent that's not marked
+      queue = _diff(graph[vertex], visited)
     end
   end
 
+  -- return all the nodes that are marked
   return visited
 end
