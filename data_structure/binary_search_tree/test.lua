@@ -205,3 +205,23 @@ test('is_leaf should return true', function()
 
   assert_equal(bst:is_leaf(4), true)
 end)
+
+test('is balanced should return true', function()
+  local bst = BinarySearchTree:new()
+  bst:add(5)
+  bst:add(4)
+  bst:add(6)
+
+  assert_equal(bst:is_balanced(), true)
+end)
+
+test('is balanced should return false', function()
+  local bst = BinarySearchTree:new()
+  bst:add(5)
+  bst:add(4)
+  bst:add(3)
+  bst:add(2)
+  bst:add(6)
+
+  assert_equal(bst:is_balanced(), false)
+end)

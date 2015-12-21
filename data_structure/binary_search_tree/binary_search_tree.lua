@@ -277,6 +277,20 @@ function BinarySearchTree:get_biggest()
   return _find(self._root, 0)
 end
 
+function BinarySearchTree:_max_depth(node)
+  if node == nil then return 0 end
+  return 1 + math.max(self:_max_depth(node.left), self:_max_depth(node.right))
+end
+
+function BinarySearchTree:_min_depth(node)
+  if node == nil then return 0 end
+  return 1 + math.min(self:_min_depth(node.left), self:_min_depth(node.right))
+end
+
+function BinarySearchTree:is_balanced()
+  return (self:_max_depth(self._root) - self:_min_depth(self._root) <= 1)
+end
+
 function BinarySearchTree:in_order(callback)
   -- first, traverse to the left, then to root and
   -- then to the right
