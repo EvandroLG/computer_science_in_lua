@@ -3,7 +3,7 @@ function _slice(array, first, last)
   local i = first
 
   while i <= last do
-    table.insert(output, array[first])
+    table.insert(output, array[i])
     i = i + 1
   end
 
@@ -24,16 +24,15 @@ function _merge(left, right)
   local index_right = 0
 
   while index_left < #left and index_right < #right do
-    print('here?')
     if left[index_left] < right[index_right] then
-      table.insert(left, left[index_left + 1])
+      table.insert(output, left[index_left])
     else
-      table.insert(right, right[index_right + 1])
+      table.insert(output, right[index_right])
     end
   end
 
-  output = _concat(output, _slice(left, index_left, #left))
-  return _concat(output, _slice(right, index_right, #right))
+  return _concat(_slice(left, index_left, #left),
+                 _slice(right, index_right, #right))
 end
 
 function merge_sort(items)
