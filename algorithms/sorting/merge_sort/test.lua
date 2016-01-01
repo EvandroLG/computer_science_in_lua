@@ -6,8 +6,7 @@ local test = unittest.test
 local assert_equal = unittest.assert_equal
 
 test('order from lowest to highest', function()
-  local elements = { 20, 10, 15, 9, 8 }
-  merge_sort(elements)
+  local elements = merge_sort({ 20, 10, 15, 9, 8 })
 
   assert_equal(elements[1], 8)
   assert_equal(elements[2], 9)

@@ -16,23 +16,30 @@ function _concat(first, second)
   return first
 end
 
-function _merge(left, right)
+function _merge(left, right, comp)
+  local left_size, right_size = #left, #right
+  local left_index, right_index = 1, 1
   local output = {}
-  local index_left = 1
-  local index_right = 1
 
-  while index_left < #left and index_right < #right do
-    if left[index_left] < right[index_right] then
-      table.insert(output, left[index_left])
-      index_left = index_left + 1
+  repeat
+    if left_index <= left_size and right_index <= right_size then
+      if left[left_index] < right[right_index] then
+        table.insert(output, left[left_index])
+        left_index = left_index + 1
+      else
+        table.insert(output, right[right_index])
+        right_index = right_index + 1
+      end
+    elseif left_index <= left_size then
+        table.insert(output, left[left_index])
+        left_index = left_index + 1
     else
-      table.insert(output, right[index_right])
-      index_right = index_right + 1
+        table.insert(output, right[right_index])
+        right_index = right_index + 1
     end
-  end
+  until (left_index > left_size and right_index > right_size)
 
-  return _concat(_slice(left, index_left, #left),
-                 _slice(right, index_right, #right))
+  return output
 end
 
 function merge_sort(items)
