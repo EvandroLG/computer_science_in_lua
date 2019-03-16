@@ -8,14 +8,6 @@ function _slice(array, first, last)
   return output
 end
 
-function _concat(first, second)
-  for i=1, #second do
-    first[#first+1] = second[i]
-  end
-
-  return first
-end
-
 function _merge(left, right, comp)
   local left_size, right_size = #left, #right
   local left_index, right_index = 1, 1
