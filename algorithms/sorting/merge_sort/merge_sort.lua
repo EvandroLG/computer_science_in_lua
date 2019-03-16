@@ -8,6 +8,7 @@ function _slice(array, first, last)
   return output
 end
 
+-- compare the array item by item and return the concated result
 function _merge(left, right, comp)
   local left_size, right_size = #left, #right
   local left_index, right_index = 1, 1
@@ -34,14 +35,19 @@ function _merge(left, right, comp)
   return output
 end
 
+-- split the array into halves and merge them recursively
 function merge_sort(items)
   if #items < 2 then return items end
 
+  -- get the middle item of the array rounded down
+  -- then get the items on the left side and on the right
   local middle = math.floor(#items / 2)
   local left = _slice(items, 1, middle)
   local right = _slice(items, middle+1, #items)
+  local sorted_left = merge_sort(left)
+  local sorted_right = merge_sort(right)
 
-  return _merge(merge_sort(left), merge_sort(right))
+  return _merge(sorted_left, sorted_right)
 end
 
 return merge_sort
